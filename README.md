@@ -16,25 +16,25 @@
 
 ---
 
-## 🌍 Overview
+## Overview
 
 **MediCareAgent** is an agentic triage assistant. A patient describes their symptoms in a chat, the system asks follow-up questions, and it classifies the case as **EMERGENCY**, **URGENT**, **ROUTINE**, or **NEED_MORE_INFORMATION**.
 
 It combines:
 
-- 🔄 A **LangGraph** workflow with specialized LLM agents
-- ⚡ **Parallel execution** of independent agents to reduce latency
-- 🔒 A **deterministic emergency guardrail** that does not depend on the LLM
-- ✅ An **LLM safety-validation agent** that reviews the triage decision
-- 📋 **Structured extraction** of patient facts from free text
-- 💬 **Session-based conversation history** with a bounded context window
-- 🎨 A lightweight **browser chat interface**
+- A **LangGraph** workflow with specialized LLM agents
+- **Parallel execution** of independent agents to reduce latency
+- A **deterministic emergency guardrail** that does not depend on the LLM
+- An **LLM safety-validation agent** that reviews the triage decision
+- **Structured extraction** of patient facts from free text
+- **Session-based conversation history** with a bounded context window
+- A lightweight **browser chat interface**
 
-> ⚠️ **Medical Disclaimer:** MediCareAgent is a student/portfolio project. It does not diagnose conditions and must not replace a licensed healthcare professional. In an emergency, contact local emergency services.
+> **Medical Disclaimer:** MediCareAgent is a student/portfolio project. It does not diagnose conditions and must not replace a licensed healthcare professional. In an emergency, contact local emergency services.
 
 ---
 
-## 🎯 Problem Statement
+## Problem Statement
 
 A plain LLM chatbot can understand symptom descriptions, but using it alone for safety-critical decisions is risky: responses can be inconsistent, emergency signs can be missed, and token costs grow with every message.
 
@@ -42,7 +42,7 @@ MediCareAgent addresses this by splitting the work across specialized agents, ad
 
 ---
 
-## 🧩 LangGraph Workflow
+## LangGraph Workflow
 
 ```text
                 START
@@ -74,7 +74,7 @@ Routing after the safety agent is done with `add_conditional_edges`. If the dete
 
 ---
 
-## 🧠 Agents
+## Agents
 
 | Node | Type | Responsibility |
 |---|---|---|
@@ -98,7 +98,7 @@ graph.add_edge("extractor", "triage")
 
 ---
 
-## 🔒 Deterministic Safety Guardrail
+## Deterministic Safety Guardrail
 
 Critical cases are not left entirely to the model. The guardrail (`app/agents/guardrail.py`) runs keyword rules on the raw current message, so it works even when the LLM asks for more information.
 
@@ -113,7 +113,7 @@ Because it is keyword-based, it only catches the phrasings it lists. Expanding t
 
 ---
 
-## 💬 Conversation Management & Token Control
+## Conversation Management & Token Control
 
 Sessions are stored in memory (`app/services/session.py`), keyed by `session_id`.
 
@@ -123,7 +123,7 @@ To stay within Groq's tokens-per-minute limits, only the **most recent messages*
 
 ---
 
-## 🔌 API
+## API
 
 | Method | Endpoint | Purpose |
 |---|---|---|
@@ -148,7 +148,7 @@ Interactive docs: `http://127.0.0.1:8000/docs`
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```text
 MediCareAgent/
@@ -182,7 +182,7 @@ MediCareAgent/
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - **Backend:** Python 3.10+, FastAPI, Uvicorn, Pydantic
 - **Agents:** LangGraph, LangChain Groq, Groq API
@@ -191,7 +191,7 @@ MediCareAgent/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 git clone https://github.com/devdeepsarkar/MediCareAgent.git
@@ -212,7 +212,7 @@ GROQ_MODEL=your_groq_model_id
 
 Use any chat model ID your Groq account has access to. The current list is at the Groq console or via `GET https://api.groq.com/openai/v1/models`. Smaller models respond noticeably faster, since the workflow makes several LLM calls per message.
 
-> ⚠️ Never commit `.env` or API keys. If a key is ever exposed, revoke it in the Groq console and create a new one.
+> Never commit `.env` or API keys. If a key is ever exposed, revoke it in the Groq console and create a new one.
 
 Run the app:
 
@@ -230,7 +230,7 @@ pytest
 
 ---
 
-## ⏱️ Performance Notes
+## Performance Notes
 
 Each chat turn makes several LLM calls (planner, extractor, triage, safety), so latency depends mostly on the model. Two changes reduced it:
 
@@ -241,7 +241,7 @@ In local testing, response time dropped from roughly 17s to roughly 5s. This was
 
 ---
 
-## 📈 Status
+## Status
 
 **Implemented**
 
@@ -266,6 +266,6 @@ In local testing, response time dropped from roughly 17s to roughly 5s. This was
 
 ---
 
-## 📄 License
+## License
 
 MIT License.
