@@ -1,4 +1,4 @@
-# 🩺 MediCareAgent — Agentic Healthcare Triage Assistant
+# 🩺 MediCareAgent: An Agentic Healthcare Triage Assistant
 
 <div align="center">
 
